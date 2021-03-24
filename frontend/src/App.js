@@ -1,38 +1,42 @@
 import {useState, useEffect} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './logo.svg';
+// Components
+import PropertiesList from './PropertiesList';
+import Search from './Search';
+// Main App style
 import './App.css';
 
 
-function App()
-{
+
+function App(){
 
   /* This is example of how to fetch data from API */
   const [propertyData, setPropertyData] = useState(null);
+  const [query, setQuery] = useState(null);
 
-  useEffect(() =>
-  {
-    async function fetchData()
-    {
-      // demo request to API (ensure it is running!)
-      const resp = await fetch("/lrProperty/17401");
+  const handleCallback = (search) => {
+    setQuery(search);
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      const resp = await fetch("/lrProperty/"+query);
       const json = await resp.json();
 
       if(json.success)
-        setPropertyData(json.lrProperty)
+        setPropertyData(json.lrProperty)      
     }
     
     fetchData();
-  }, []);
+  }, [query]);
   /* end example */
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        {propertyData ? <strong>{propertyData.street}</strong> : null}
+        <Search callback = {handleCallback}/>
+        <PropertiesList propertiesList={propertyData}/>
       </header>
     </div>
   );

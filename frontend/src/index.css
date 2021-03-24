@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App-header {
+  background-color: #616b7d!important;
+}
+
+tr.demo {
+  background-color: #adb5bd!important;
+  font-size: 20px;
+}
